@@ -1,2 +1,26 @@
-# Created by pytest automatically.
-*
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Testing & Cache
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# SQLite temporary journals
+*.db-journal
+*.db-wal
+*.db-shm
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
