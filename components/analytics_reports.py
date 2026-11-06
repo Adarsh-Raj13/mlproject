@@ -1,4 +1,4 @@
-"""
+﻿"""
 Page 6: Analytics and Reports Component.
 Comprehensive reporting dashboard displaying model performance benchmarks,
 confusion matrix, anomaly distribution graphs, fault frequency analysis,
@@ -20,16 +20,16 @@ REPORTS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 def render_analytics_reports_page(db: DatabaseManager):
     st.markdown("""
     <div class="iot-header">
-        <h1>📑 ANALYTICS, BENCHMARKS & AUDIT REPORTS</h1>
+        <h1>ðŸ“‘ ANALYTICS, BENCHMARKS & AUDIT REPORTS</h1>
         <p>Model Evaluation Metrics &bull; Fault Frequency Distributions &bull; Energy Audits & CSV Exports</p>
     </div>
     """, unsafe_allow_html=True)
 
     tab_eval, tab_energy, tab_faults, tab_export = st.tabs([
-        "🤖 ML Model Evaluation & Benchmarks",
-        "⚡ Energy Consumption Reports",
-        "📊 Fault Frequency & Anomalies",
-        "💾 Data Export Center"
+        "ðŸ¤– ML Model Evaluation & Benchmarks",
+        "âš¡ Energy Consumption Reports",
+        "ðŸ“Š Fault Frequency & Anomalies",
+        "ðŸ’¾ Data Export Center"
     ])
 
     # ---------------- TAB 1: MODEL EVALUATION & BENCHMARKS ----------------
@@ -47,14 +47,14 @@ def render_analytics_reports_page(db: DatabaseManager):
         with c1:
             cm_img_path = os.path.join(REPORTS_DIR, "confusion_matrix.png")
             if os.path.exists(cm_img_path):
-                st.image(cm_img_path, caption="Multiclass Fault Confusion Matrix", use_container_width=True)
+                st.image(cm_img_path, caption="Multiclass Fault Confusion Matrix", width='stretch')
             else:
                 st.info("Confusion matrix plot not found. Run model training pipeline.")
 
         with c2:
             comp_img_path = os.path.join(REPORTS_DIR, "model_comparison.png")
             if os.path.exists(comp_img_path):
-                st.image(comp_img_path, caption="Algorithm Performance Comparison (Accuracy, F1, Precision, Recall)", use_container_width=True)
+                st.image(comp_img_path, caption="Algorithm Performance Comparison (Accuracy, F1, Precision, Recall)", width='stretch')
             else:
                 st.info("Model comparison plot not found.")
 
@@ -63,12 +63,12 @@ def render_analytics_reports_page(db: DatabaseManager):
         with c3:
             anom_img_path = os.path.join(REPORTS_DIR, "anomaly_distribution.png")
             if os.path.exists(anom_img_path):
-                st.image(anom_img_path, caption="Isolation Forest Anomaly Score Distribution", use_container_width=True)
+                st.image(anom_img_path, caption="Isolation Forest Anomaly Score Distribution", width='stretch')
 
         with c4:
             clust_img_path = os.path.join(REPORTS_DIR, "cluster_distribution.png")
             if os.path.exists(clust_img_path):
-                st.image(clust_img_path, caption="K-Means Energy Regime Distribution", use_container_width=True)
+                st.image(clust_img_path, caption="K-Means Energy Regime Distribution", width='stretch')
 
     # ---------------- TAB 2: ENERGY CONSUMPTION REPORTS ----------------
     with tab_energy:
@@ -85,7 +85,7 @@ def render_analytics_reports_page(db: DatabaseManager):
                 Reading_Count=("id", "count")
             ).reset_index()
 
-            st.dataframe(summary_stats.round(3), use_container_width=True, hide_index=True)
+            st.dataframe(summary_stats.round(3), width='stretch', hide_index=True)
 
             # Energy Bar Chart
             fig_energy = px.bar(
@@ -99,7 +99,7 @@ def render_analytics_reports_page(db: DatabaseManager):
                 color_discrete_sequence=px.colors.qualitative.Pastel
             )
             fig_energy.update_layout(height=350, showlegend=False, margin=dict(l=20, r=20, t=40, b=20))
-            st.plotly_chart(fig_energy, use_container_width=True)
+            st.plotly_chart(fig_energy, width='stretch')
         else:
             st.info("No telemetry records available for energy audit.")
 
@@ -125,7 +125,7 @@ def render_analytics_reports_page(db: DatabaseManager):
                     color_discrete_sequence=px.colors.sequential.Reds_r
                 )
                 fig_fault_bar.update_layout(height=350, showlegend=False, margin=dict(l=20, r=20, t=40, b=20))
-                st.plotly_chart(fig_fault_bar, use_container_width=True)
+                st.plotly_chart(fig_fault_bar, width='stretch')
 
             with col_f2:
                 sev_counts = df_alerts["severity"].value_counts().reset_index()
@@ -145,7 +145,7 @@ def render_analytics_reports_page(db: DatabaseManager):
                     }
                 )
                 fig_sev_pie.update_layout(height=350, margin=dict(l=20, r=20, t=40, b=20))
-                st.plotly_chart(fig_sev_pie, use_container_width=True)
+                st.plotly_chart(fig_sev_pie, width='stretch')
         else:
             st.info("No fault incidents recorded in alert logs.")
 
@@ -157,39 +157,40 @@ def render_analytics_reports_page(db: DatabaseManager):
         exp_c1, exp_c2, exp_c3 = st.columns(3)
 
         with exp_c1:
-            st.markdown("#### ⚡ Telemetry Readings Log")
+            st.markdown("#### âš¡ Telemetry Readings Log")
             df_readings = db.get_readings_history(limit=1000)
             if not df_readings.empty:
                 csv_readings = df_readings.to_csv(index=False).encode('utf-8')
                 st.download_button(
-                    "📥 Download Readings CSV",
+                    "ðŸ“¥ Download Readings CSV",
                     data=csv_readings,
                     file_name=f"electrical_readings_{datetime.now().strftime('%Y%m%d')}.csv",
                     mime="text/csv"
                 )
 
         with exp_c2:
-            st.markdown("#### 🚨 Alert Incident History")
+            st.markdown("#### ðŸš¨ Alert Incident History")
             all_alerts = db.get_recent_alerts(limit=500)
             if all_alerts:
                 df_alerts_exp = pd.DataFrame(all_alerts)
                 csv_alerts = df_alerts_exp.to_csv(index=False).encode('utf-8')
                 st.download_button(
-                    "📥 Download Alerts CSV",
+                    "ðŸ“¥ Download Alerts CSV",
                     data=csv_alerts,
                     file_name=f"alert_history_{datetime.now().strftime('%Y%m%d')}.csv",
                     mime="text/csv"
                 )
 
         with exp_c3:
-            st.markdown("#### 📋 Processed Dataset")
+            st.markdown("#### ðŸ“‹ Processed Dataset")
             processed_csv_path = "dataset/processed_data.csv"
             if os.path.exists(processed_csv_path):
                 with open(processed_csv_path, "rb") as f:
                     st.download_button(
-                        "📥 Download Processed Dataset (CSV)",
+                        "ðŸ“¥ Download Processed Dataset (CSV)",
                         data=f,
                         file_name="processed_electrical_dataset.csv",
                         mime="text/csv"
                     )
+
 

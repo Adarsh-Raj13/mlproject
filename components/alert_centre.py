@@ -1,4 +1,4 @@
-"""
+﻿"""
 Page 5: Early Alert Centre Component.
 Centralized alert lifecycle management, status filtering (Active, Acknowledged, Resolved),
 severity breakdowns (Green, Yellow, Orange, Red), parameter attribution, and corrective actions.
@@ -13,7 +13,7 @@ from database.database import DatabaseManager
 def render_alert_centre_page(db: DatabaseManager):
     st.markdown("""
     <div class="iot-header">
-        <h1>🚨 EARLY WARNING ALERT & DISPATCH CENTRE</h1>
+        <h1>ðŸš¨ EARLY WARNING ALERT & DISPATCH CENTRE</h1>
         <p>Real-Time Severity Triage &bull; Electrical Safety Threshold Violations &bull; Maintenance Actions</p>
     </div>
     """, unsafe_allow_html=True)
@@ -77,10 +77,10 @@ def render_alert_centre_page(db: DatabaseManager):
     st.markdown("<div style='margin-top: 24px;'></div>", unsafe_allow_html=True)
 
     if not alerts:
-        st.success("🎉 No alerts matching the selected filters. System operating within all safety margins.")
+        st.success("ðŸŽ‰ No alerts matching the selected filters. System operating within all safety margins.")
         return
 
-    st.subheader("📋 Active Alert Queue & History")
+    st.subheader("ðŸ“‹ Active Alert Queue & History")
 
     # Render each alert as an actionable card
     for alert in alerts:
@@ -117,7 +117,7 @@ def render_alert_centre_page(db: DatabaseManager):
                         <div><b>Trigger Parameter:</b> <span style="color:#b91c1c; font-weight:600;">{param}</span> (Value: {val:.2f} | Limit: {thresh:.2f})</div>
                     </div>
                     <div>
-                        <b>🛠️ Corrective Action:</b>
+                        <b>ðŸ› ï¸ Corrective Action:</b>
                         <div style="background:#f8fafc; padding:6px 10px; border-radius:4px; margin-top:4px; color:#1e293b;">
                             {action}
                         </div>
@@ -142,4 +142,5 @@ def render_alert_centre_page(db: DatabaseManager):
                     if st.button("Resolve Alert", key=f"res_ack_{a_id}", type="primary"):
                         db.resolve_alert(a_id)
                         st.rerun()
+
 

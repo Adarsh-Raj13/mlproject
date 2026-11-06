@@ -1,4 +1,4 @@
-"""UI Page Components initialization."""
+﻿"""UI Page Components initialization."""
 from components.dashboard import render_dashboard_page
 from components.appliance_monitoring import render_appliance_monitoring_page
 from components.load_analytics import render_load_analytics_page
@@ -14,4 +14,5 @@ __all__ = [
     "render_alert_centre_page",
     "render_analytics_reports_page"
 ]
+
 

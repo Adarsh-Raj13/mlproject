@@ -1,4 +1,4 @@
-"""
+﻿"""
 Page 4: Fault Detection Component.
 Interactive fault analysis supporting manual parameter input, CSV batch upload,
 actual ML inference (Load Profiler, Isolation Forest, Fault Classifier),
@@ -18,7 +18,7 @@ from src.feature_engineering import APPLIANCE_SPECS
 def render_fault_detection_page(db: DatabaseManager, engine: InferenceEngine):
     st.markdown("""
     <div class="iot-header">
-        <h1>🔍 INTERACTIVE FAULT DIAGNOSTICS & INFERENCE</h1>
+        <h1>ðŸ” INTERACTIVE FAULT DIAGNOSTICS & INFERENCE</h1>
         <p>Live Machine Learning Classification &bull; Anomaly Root-Cause Analysis &bull; Operational Safeguards</p>
     </div>
     """, unsafe_allow_html=True)
@@ -28,9 +28,9 @@ def render_fault_detection_page(db: DatabaseManager, engine: InferenceEngine):
         return
 
     tab_manual, tab_upload, tab_sim = st.tabs([
-        "⚙️ Manual Parameter Diagnostics",
-        "📂 CSV Telemetry Batch Upload",
-        "🧪 Pre-configured Fault Scenarios"
+        "âš™ï¸ Manual Parameter Diagnostics",
+        "ðŸ“‚ CSV Telemetry Batch Upload",
+        "ðŸ§ª Pre-configured Fault Scenarios"
     ])
 
     # ---------------- TAB 1: MANUAL PARAMETER ENTRY ----------------
@@ -42,7 +42,7 @@ def render_fault_detection_page(db: DatabaseManager, engine: InferenceEngine):
         with col_app:
             app_choice = st.selectbox("Appliance Type", list(APPLIANCE_SPECS.keys()), index=2)
             spec = APPLIANCE_SPECS[app_choice]
-            st.caption(f"Rated: {spec['rated_power']}W | {spec['rated_current']}A | Max Temp: {spec['max_safe_temp']}°C")
+            st.caption(f"Rated: {spec['rated_power']}W | {spec['rated_current']}A | Max Temp: {spec['max_safe_temp']}Â°C")
 
         with col_v:
             voltage_input = st.number_input("Grid Voltage (V)", min_value=120.0, max_value=320.0, value=230.0, step=1.0)
@@ -56,13 +56,13 @@ def render_fault_detection_page(db: DatabaseManager, engine: InferenceEngine):
             power_input = st.number_input("Active Power (W)", min_value=1.0, max_value=6000.0, value=float(round(default_p, 1)), step=10.0)
         with col_pf:
             calculated_pf = min(1.0, max(0.1, power_input / max(1e-3, (voltage_input * current_input))))
-            pf_input = st.slider("Power Factor (cos φ)", min_value=0.20, max_value=1.0, value=float(round(calculated_pf, 2)), step=0.01)
+            pf_input = st.slider("Power Factor (cos Ï†)", min_value=0.20, max_value=1.0, value=float(round(calculated_pf, 2)), step=0.01)
         with col_t:
-            temp_input = st.number_input("Measured Temperature (°C)", min_value=15.0, max_value=140.0, value=45.0, step=1.0)
+            temp_input = st.number_input("Measured Temperature (Â°C)", min_value=15.0, max_value=140.0, value=45.0, step=1.0)
         with col_dur:
             duration_input = st.number_input("Operating Duration (mins)", min_value=1.0, max_value=1440.0, value=60.0, step=15.0)
 
-        if st.button("🚀 Run Live ML Fault Diagnostics", key="btn_run_manual", type="primary"):
+        if st.button("ðŸš€ Run Live ML Fault Diagnostics", key="btn_run_manual", type="primary"):
             reading_dict = {
                 "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 "Appliance_Type": app_choice,
@@ -123,7 +123,7 @@ def render_fault_detection_page(db: DatabaseManager, engine: InferenceEngine):
 
             # Display Diagnostics Dashboard Results
             st.markdown("---")
-            st.markdown("### 📋 Machine Learning Diagnostic Assessment")
+            st.markdown("### ðŸ“‹ Machine Learning Diagnostic Assessment")
 
             d1, d2, d3, d4 = st.columns(4)
             with d1:
@@ -169,16 +169,16 @@ def render_fault_detection_page(db: DatabaseManager, engine: InferenceEngine):
             # Root cause abnormal parameters & recommendations
             col_params, col_action = st.columns(2)
             with col_params:
-                st.markdown("#### ⚠️ Identified Parameter Deviations")
+                st.markdown("#### âš ï¸ Identified Parameter Deviations")
                 if res["abnormal_parameters"]:
                     for p_dev in res["abnormal_parameters"]:
-                        st.warning(f"🚩 {p_dev}")
+                        st.warning(f"ðŸš© {p_dev}")
                 else:
-                    st.success("✅ All monitored electrical parameters reside within allowable design tolerances.")
+                    st.success("âœ… All monitored electrical parameters reside within allowable design tolerances.")
 
             with col_action:
-                st.markdown("#### 🛠️ Recommended Corrective Action")
-                st.info(f"👉 **Action Plan:** {res['corrective_action']}")
+                st.markdown("#### ðŸ› ï¸ Recommended Corrective Action")
+                st.info(f"ðŸ‘‰ **Action Plan:** {res['corrective_action']}")
 
     # ---------------- TAB 2: CSV BATCH UPLOAD ----------------
     with tab_upload:
@@ -189,7 +189,7 @@ def render_fault_detection_page(db: DatabaseManager, engine: InferenceEngine):
         if os.path.exists(sample_csv):
             with open(sample_csv, "rb") as f:
                 st.download_button(
-                    "📥 Download Sample CSV Template",
+                    "ðŸ“¥ Download Sample CSV Template",
                     data=f,
                     file_name="sample_electrical_telemetry.csv",
                     mime="text/csv"
@@ -200,9 +200,9 @@ def render_fault_detection_page(db: DatabaseManager, engine: InferenceEngine):
             try:
                 df_upload = pd.read_csv(uploaded_file)
                 st.write(f"Loaded **{len(df_upload)}** rows. Preview:")
-                st.dataframe(df_upload.head(5), use_container_width=True)
+                st.dataframe(df_upload.head(5), width='stretch')
 
-                if st.button("⚡ Process CSV with ML Models", key="btn_run_csv", type="primary"):
+                if st.button("âš¡ Process CSV with ML Models", key="btn_run_csv", type="primary"):
                     with st.spinner("Processing batch telemetry through ML models..."):
                         results_df = engine.batch_predict(df_upload)
 
@@ -220,16 +220,16 @@ def render_fault_detection_page(db: DatabaseManager, engine: InferenceEngine):
                     with c3:
                         st.metric("Predominant State", fault_summary.index[0], f"{fault_summary.iloc[0]} occurrences")
 
-                    st.markdown("#### 📊 Diagnostic Results Table")
+                    st.markdown("#### ðŸ“Š Diagnostic Results Table")
                     display_cols = ["Appliance_Type", "Voltage", "Current", "Active_Power", "Temperature",
                                     "Load_Profile", "Predicted_Fault", "Model_Confidence", "Alert_Severity", "Corrective_Action"]
                     valid_cols = [c for c in display_cols if c in results_df.columns]
-                    st.dataframe(results_df[valid_cols], use_container_width=True)
+                    st.dataframe(results_df[valid_cols], width='stretch')
 
                     # Download processed results
                     csv_export = results_df.to_csv(index=False).encode('utf-8')
                     st.download_button(
-                        "📥 Download Evaluated Diagnostic Report (CSV)",
+                        "ðŸ“¥ Download Evaluated Diagnostic Report (CSV)",
                         data=csv_export,
                         file_name=f"fault_diagnostics_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
                         mime="text/csv"
@@ -270,7 +270,7 @@ def render_fault_detection_page(db: DatabaseManager, engine: InferenceEngine):
 
         st.json(selected_data)
 
-        if st.button("⚡ Test This Scenario", type="primary"):
+        if st.button("âš¡ Test This Scenario", type="primary"):
             sim_dict = dict(selected_data)
             sim_dict["Timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             sim_dict["Frequency"] = 50.0
@@ -293,8 +293,9 @@ def render_fault_detection_page(db: DatabaseManager, engine: InferenceEngine):
                     Trigger Deviations: {', '.join(res['abnormal_parameters']) if res['abnormal_parameters'] else 'None (Nominal)'}
                 </div>
                 <div style="background: #f1f5f9; padding: 10px; border-radius: 6px;">
-                    🛠️ <b>Action:</b> {res['corrective_action']}
+                    ðŸ› ï¸ <b>Action:</b> {res['corrective_action']}
                 </div>
             </div>
             """, unsafe_allow_html=True)
+
 

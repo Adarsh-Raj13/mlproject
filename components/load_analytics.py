@@ -1,4 +1,4 @@
-"""
+﻿"""
 Page 3: Load Profiling Component.
 Analyzes energy consumption signatures, unsupervised K-Means load regimes,
 daily and weekly energy curves, peak load periods, and appliance-wise comparative profiles.
@@ -17,7 +17,7 @@ from src.prediction import InferenceEngine
 def render_load_analytics_page(db: DatabaseManager, engine: InferenceEngine):
     st.markdown("""
     <div class="iot-header">
-        <h1>⚡ APPLIANCE LOAD PROFILING & REGIME ANALYTICS</h1>
+        <h1>âš¡ APPLIANCE LOAD PROFILING & REGIME ANALYTICS</h1>
         <p>Unsupervised K-Means Behavioral Regimes &bull; Energy Baseline Modeling &bull; Peak Demand Analytics</p>
     </div>
     """, unsafe_allow_html=True)
@@ -72,7 +72,7 @@ def render_load_analytics_page(db: DatabaseManager, engine: InferenceEngine):
     st.markdown("<div style='margin-top: 24px;'></div>", unsafe_allow_html=True)
 
     # Section 1: Appliance Load Profiles & Baseline Ranges
-    st.subheader("📋 Appliance Baseline Load Characterization")
+    st.subheader("ðŸ“‹ Appliance Baseline Load Characterization")
     prof_data = []
 
     for a in appliances:
@@ -110,14 +110,14 @@ def render_load_analytics_page(db: DatabaseManager, engine: InferenceEngine):
             "Load Regime Classification": load_class
         })
 
-    st.dataframe(pd.DataFrame(prof_data), use_container_width=True, hide_index=True)
+    st.dataframe(pd.DataFrame(prof_data), width='stretch', hide_index=True)
 
     # Section 2: Visual Charts (Scatter Clusters & Comparison)
     st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
     c1, c2 = st.columns(2)
 
     with c1:
-        st.subheader("📊 Active vs Reactive Power Signature (P-Q Plane)")
+        st.subheader("ðŸ“Š Active vs Reactive Power Signature (P-Q Plane)")
         fig_scatter = px.scatter(
             df_history,
             x="active_power",
@@ -131,10 +131,10 @@ def render_load_analytics_page(db: DatabaseManager, engine: InferenceEngine):
             color_discrete_sequence=px.colors.qualitative.Bold
         )
         fig_scatter.update_layout(height=380, margin=dict(l=20, r=20, t=40, b=20))
-        st.plotly_chart(fig_scatter, use_container_width=True)
+        st.plotly_chart(fig_scatter, width='stretch')
 
     with c2:
-        st.subheader("⚡ Daily Consumption Comparison by Appliance")
+        st.subheader("âš¡ Daily Consumption Comparison by Appliance")
         app_energy = df_history.groupby("appliance_name")["energy_kwh"].sum().reset_index()
         fig_bar = px.bar(
             app_energy,
@@ -148,18 +148,18 @@ def render_load_analytics_page(db: DatabaseManager, engine: InferenceEngine):
             color_discrete_sequence=px.colors.qualitative.Prism
         )
         fig_bar.update_layout(height=380, showlegend=False, margin=dict(l=20, r=20, t=40, b=20))
-        st.plotly_chart(fig_bar, use_container_width=True)
+        st.plotly_chart(fig_bar, width='stretch')
 
     # Section 3: Machine Learning K-Means Load Regime Profiles
     st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
-    st.subheader("🤖 Unsupervised K-Means Behavioral Regimes")
+    st.subheader("ðŸ¤– Unsupervised K-Means Behavioral Regimes")
 
     col_img, col_desc = st.columns([1, 1])
     cluster_img_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "reports", "cluster_distribution.png")
 
     with col_img:
         if os.path.exists(cluster_img_path):
-            st.image(cluster_img_path, caption="Discovered Operating Regimes Distribution", use_container_width=True)
+            st.image(cluster_img_path, caption="Discovered Operating Regimes Distribution", width='stretch')
         else:
             st.info("Regime distribution chart will be shown here after model training.")
 
@@ -175,4 +175,5 @@ def render_load_analytics_page(db: DatabaseManager, engine: InferenceEngine):
         - **Cluster 3: Peak Surge / Extreme Demand Regime**
           Occurs during high inrush currents, motor jams, overload conditions, or combined simultaneous operations requiring immediate thermal monitoring.
         """)
+
 

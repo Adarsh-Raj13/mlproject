@@ -1,4 +1,4 @@
-"""
+﻿"""
 Page 2: Appliance Monitoring Component.
 Detailed telemetry inspection for each of the 6 monitored appliances:
 Ceiling Fan, Refrigerator, Air Conditioner, Washing Machine, Electric Iron, Water Heater.
@@ -16,7 +16,7 @@ from database.database import DatabaseManager
 def render_appliance_monitoring_page(db: DatabaseManager):
     st.markdown("""
     <div class="iot-header">
-        <h1>📊 APPLIANCE TELEMETRY MONITORING</h1>
+        <h1>ðŸ“Š APPLIANCE TELEMETRY MONITORING</h1>
         <p>In-Depth Telemetry, Electrical Signatures & Dynamic Operational Metrics for Individual Equipment</p>
     </div>
     """, unsafe_allow_html=True)
@@ -30,7 +30,7 @@ def render_appliance_monitoring_page(db: DatabaseManager):
 
     # Appliance selector in horizontal tabs or selectbox
     selected_app_name = st.selectbox(
-        "🎯 Select Monitored Appliance for Detailed Telemetry Inspection:",
+        "ðŸŽ¯ Select Monitored Appliance for Detailed Telemetry Inspection:",
         app_names,
         index=0
     )
@@ -83,7 +83,7 @@ def render_appliance_monitoring_page(db: DatabaseManager):
             <div><b>Rated Power:</b> {rated_p} W</div>
             <div><b>Rated Current:</b> {rated_i} A</div>
             <div><b>Nominal PF:</b> {app_meta['nominal_pf']}</div>
-            <div><b>Thermal Limit:</b> {max_t} °C</div>
+            <div><b>Thermal Limit:</b> {max_t} Â°C</div>
             <div><b>Current Condition:</b> <b>{load_condition}</b></div>
             <div><b>Cumulative Energy:</b> {e_val:.3f} kWh</div>
             <div><b>Run Duration:</b> {dur_val:.1f} mins</div>
@@ -111,7 +111,7 @@ def render_appliance_monitoring_page(db: DatabaseManager):
             }
         ))
         fig_v.update_layout(height=200, margin=dict(l=15, r=15, t=30, b=15))
-        st.plotly_chart(fig_v, use_container_width=True)
+        st.plotly_chart(fig_v, width='stretch')
 
     with c2:
         fig_i = go.Figure(go.Indicator(
@@ -130,7 +130,7 @@ def render_appliance_monitoring_page(db: DatabaseManager):
             }
         ))
         fig_i.update_layout(height=200, margin=dict(l=15, r=15, t=30, b=15))
-        st.plotly_chart(fig_i, use_container_width=True)
+        st.plotly_chart(fig_i, width='stretch')
 
     with c3:
         fig_p = go.Figure(go.Indicator(
@@ -149,13 +149,13 @@ def render_appliance_monitoring_page(db: DatabaseManager):
             }
         ))
         fig_p.update_layout(height=200, margin=dict(l=15, r=15, t=30, b=15))
-        st.plotly_chart(fig_p, use_container_width=True)
+        st.plotly_chart(fig_p, width='stretch')
 
     with c4:
         fig_t = go.Figure(go.Indicator(
             mode="gauge+number",
             value=t_val,
-            title={'text': "Temperature (°C)", 'font': {'size': 14}},
+            title={'text': "Temperature (Â°C)", 'font': {'size': 14}},
             gauge={
                 'axis': {'range': [20, 110]},
                 'bar': {'color': "#ea580c"},
@@ -168,13 +168,13 @@ def render_appliance_monitoring_page(db: DatabaseManager):
             }
         ))
         fig_t.update_layout(height=200, margin=dict(l=15, r=15, t=30, b=15))
-        st.plotly_chart(fig_t, use_container_width=True)
+        st.plotly_chart(fig_t, width='stretch')
 
     # Historical Telemetry Trends
-    st.subheader(f"📈 Historical Telemetry Time Series: {selected_app_name}")
+    st.subheader(f"ðŸ“ˆ Historical Telemetry Time Series: {selected_app_name}")
     df_chart = df_history.sort_values("timestamp")
 
-    tab1, tab2, tab3 = st.tabs(["⚡ Power & Current Signature", "🌡️ Thermal Dynamics", "📐 AC Phasor & Power Factor"])
+    tab1, tab2, tab3 = st.tabs(["âš¡ Power & Current Signature", "ðŸŒ¡ï¸ Thermal Dynamics", "ðŸ“ AC Phasor & Power Factor"])
 
     with tab1:
         fig_power = go.Figure()
@@ -198,33 +198,33 @@ def render_appliance_monitoring_page(db: DatabaseManager):
             height=360,
             margin=dict(l=20, r=20, t=40, b=20)
         )
-        st.plotly_chart(fig_power, use_container_width=True)
+        st.plotly_chart(fig_power, width='stretch')
 
     with tab2:
         fig_temp = go.Figure()
         fig_temp.add_trace(go.Scatter(
             x=df_chart["timestamp"], y=df_chart["temperature"],
-            name="Measured Temp (°C)", line=dict(color="#ea580c", width=2.5)
+            name="Measured Temp (Â°C)", line=dict(color="#ea580c", width=2.5)
         ))
         fig_temp.add_hline(
             y=max_t, line_dash="dash", line_color="red",
-            annotation_text=f"Max Safe Threshold ({max_t}°C)"
+            annotation_text=f"Max Safe Threshold ({max_t}Â°C)"
         )
         fig_temp.update_layout(
             title="Thermal Gradient Profile",
             xaxis_title="Time",
-            yaxis_title="Temperature (°C)",
+            yaxis_title="Temperature (Â°C)",
             template="plotly_white",
             height=360,
             margin=dict(l=20, r=20, t=40, b=20)
         )
-        st.plotly_chart(fig_temp, use_container_width=True)
+        st.plotly_chart(fig_temp, width='stretch')
 
     with tab3:
         fig_pf = px.line(
             df_chart, x="timestamp", y="power_factor",
             title="Power Factor Variation",
-            labels={"power_factor": "Power Factor (cos φ)", "timestamp": "Timestamp"},
+            labels={"power_factor": "Power Factor (cos Ï†)", "timestamp": "Timestamp"},
             template="plotly_white",
             color_discrete_sequence=["#10b981"]
         )
@@ -234,5 +234,6 @@ def render_appliance_monitoring_page(db: DatabaseManager):
         )
         fig_pf.update_yaxes(range=[0.4, 1.02])
         fig_pf.update_layout(height=360, margin=dict(l=20, r=20, t=40, b=20))
-        st.plotly_chart(fig_pf, use_container_width=True)
+        st.plotly_chart(fig_pf, width='stretch')
+
 

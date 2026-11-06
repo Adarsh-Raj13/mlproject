@@ -1,4 +1,4 @@
-"""
+﻿"""
 Page 1: Home Dashboard Component.
 Displays high-level KPI cards, overall system health, appliance status cards,
 real-time telemetry trends, recent alerts, and load distribution.
@@ -16,7 +16,7 @@ from database.database import DatabaseManager
 def render_dashboard_page(db: DatabaseManager):
     st.markdown("""
     <div class="iot-header">
-        <h1>⚡ SMART LOAD MONITOR</h1>
+        <h1>âš¡ SMART LOAD MONITOR</h1>
         <p>Intelligent Electrical Monitoring and Early Fault Detection System &bull; Live Facility Telemetry</p>
     </div>
     """, unsafe_allow_html=True)
@@ -95,7 +95,7 @@ def render_dashboard_page(db: DatabaseManager):
     st.markdown("<div style='margin-top: 24px;'></div>", unsafe_allow_html=True)
 
     # 3. Monitored Appliance Status Cards
-    st.subheader("🔌 Monitored Appliances Status")
+    st.subheader("ðŸ”Œ Monitored Appliances Status")
     cols = st.columns(3)
 
     for i, app in enumerate(latest_readings):
@@ -110,11 +110,11 @@ def render_dashboard_page(db: DatabaseManager):
 
             # Calculate badge status
             if temp > app.get("max_safe_temp", 65.0) or cur > app.get("rated_current", 5.0) * 1.5:
-                badge_html = '<span class="badge-pill badge-red">● Critical</span>'
+                badge_html = '<span class="badge-pill badge-red">â— Critical</span>'
             elif p > app.get("rated_power", 1000.0) * 1.15 or v < 205.0 or v > 250.0:
-                badge_html = '<span class="badge-pill badge-orange">▲ Warning</span>'
+                badge_html = '<span class="badge-pill badge-orange">â–² Warning</span>'
             else:
-                badge_html = '<span class="badge-pill badge-green">✔ Normal</span>'
+                badge_html = '<span class="badge-pill badge-green">âœ” Normal</span>'
 
             st.markdown(f"""
             <div class="telemetry-card">
@@ -140,7 +140,7 @@ def render_dashboard_page(db: DatabaseManager):
                     </div>
                     <div class="param-box">
                         <div class="param-label">Temp</div>
-                        <div class="param-val">{temp:.1f}°C</div>
+                        <div class="param-val">{temp:.1f}Â°C</div>
                     </div>
                 </div>
             </div>
@@ -151,7 +151,7 @@ def render_dashboard_page(db: DatabaseManager):
     g1, g2 = st.columns([7, 5])
 
     with g1:
-        st.subheader("📈 Electrical Load & Power Trends")
+        st.subheader("ðŸ“ˆ Electrical Load & Power Trends")
         if not df_history.empty:
             # Sort ascending for time series line chart
             df_plot = df_history.sort_values("timestamp")
@@ -170,12 +170,12 @@ def render_dashboard_page(db: DatabaseManager):
                 margin=dict(l=20, r=20, t=40, b=20),
                 legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
             )
-            st.plotly_chart(fig_trend, use_container_width=True)
+            st.plotly_chart(fig_trend, width='stretch')
         else:
             st.info("No historical telemetry available yet. Start simulation or train models to generate records.")
 
     with g2:
-        st.subheader("🥧 Load Distribution")
+        st.subheader("ðŸ¥§ Load Distribution")
         if latest_readings:
             power_dist = [
                 {"Appliance": r["appliance_name"], "Active Power (W)": max(1.0, r.get("active_power", 0.0) or 1.0)}
@@ -194,11 +194,11 @@ def render_dashboard_page(db: DatabaseManager):
                 margin=dict(l=10, r=10, t=20, b=20),
                 legend=dict(orientation="v", yanchor="middle", y=0.5)
             )
-            st.plotly_chart(fig_pie, use_container_width=True)
+            st.plotly_chart(fig_pie, width='stretch')
 
     # 5. Recent Alerts Section
     st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
-    st.subheader("🚨 Recent Early Warning Alerts")
+    st.subheader("ðŸš¨ Recent Early Warning Alerts")
 
     if recent_alerts:
         alert_rows = []
@@ -222,9 +222,10 @@ def render_dashboard_page(db: DatabaseManager):
     # Engineering Disclaimer
     st.markdown("""
     <div class="safety-disclaimer">
-        ℹ <b>Engineering Decision-Support Disclaimer:</b> This monitoring system is an educational decision-support
+        â„¹ <b>Engineering Decision-Support Disclaimer:</b> This monitoring system is an educational decision-support
         and diagnostic tool powered by Machine Learning. It does not replace physical calibrated circuit breakers (MCBs),
         residual current devices (RCDs), fuses, or statutory electrical safety inspections.
     </div>
     """, unsafe_allow_html=True)
+
 
