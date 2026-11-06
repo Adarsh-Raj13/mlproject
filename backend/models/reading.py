@@ -21,3 +21,4 @@ class ElectricalReading(Base):
     operating_duration = Column(Float, nullable=False, default=0.0)
     energy_consumption = Column(Float, nullable=False, default=0.0)
     is_simulated = Column(Boolean, default=False)
+

@@ -120,3 +120,4 @@ class DataPreprocessor:
     def load(cls, filepath: str) -> "DataPreprocessor":
         """Loads preprocessor artifact from disk."""
         return joblib.load(filepath)
+

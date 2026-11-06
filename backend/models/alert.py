@@ -19,3 +19,4 @@ class Alert(Base):
     recommended_action = Column(Text, nullable=False)
     acknowledgement_status = Column(String(50), nullable=False, default="Active")
     resolved_at = Column(DateTime)
+

@@ -10,3 +10,4 @@ if not logger.handlers:
     logger.addHandler(handler)
 
 __all__ = ["logger"]
+

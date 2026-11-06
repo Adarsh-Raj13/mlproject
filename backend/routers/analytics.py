@@ -22,3 +22,4 @@ def get_analytics_summary(db: Session = Depends(get_db)):
         "total_readings": total_readings,
         "health_score": max(10, min(100, int(100 - (crit_alerts * 15 + warn_alerts * 5))))
     }
+

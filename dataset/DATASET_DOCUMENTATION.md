@@ -40,3 +40,4 @@ Operational Statuses: 7 conditions (Normal, Overload, Overheating, Overcurrent, 
 | `Voltage_Deviation` | $\|V - 230\| / 230$ | Flags brownouts, sags, and voltage spikes |
 | `Temp_Margin` | $T - T_{\text{max\_safe}}$ (°C) | Positive value triggers thermal early warning |
 | `PF_Deviation` | $\|\text{PF} - \text{PF}_{\text{nominal}}\|$ | Diagnoses capacitor failure or non-linear distortion |
+

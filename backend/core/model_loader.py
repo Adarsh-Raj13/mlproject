@@ -11,3 +11,4 @@ class ModelLoader:
 
 model_loader = ModelLoader()
 __all__ = ["model_loader", "ModelLoader"]
+

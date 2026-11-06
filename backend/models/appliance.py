@@ -19,3 +19,4 @@ class Appliance(Base):
     installation_date = Column(String(50))
     operating_status = Column(String(50), default="Online")
     created_at = Column(DateTime, default=datetime.utcnow)
+

@@ -9,3 +9,4 @@ class FaultClassificationService:
         return res["predicted_fault"], res["confidence"], res["corrective_action"]
 
 fault_classification_service = FaultClassificationService()
+

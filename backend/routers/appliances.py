@@ -19,3 +19,4 @@ def get_appliance(appliance_id: int, db: Session = Depends(get_db)):
     if not app:
         raise HTTPException(status_code=404, detail="Appliance not found")
     return app
+

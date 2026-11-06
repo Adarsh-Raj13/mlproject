@@ -19,3 +19,4 @@ class MLPrediction(Base):
     model_version = Column(String(50), default="v1.0")
     abnormal_parameters = Column(Text)
     corrective_action = Column(Text)
+

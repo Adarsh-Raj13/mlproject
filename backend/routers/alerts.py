@@ -40,3 +40,4 @@ def resolve_alert(alert_id: int, db: Session = Depends(get_db)):
     alert.resolved_at = datetime.utcnow()
     db.commit()
     return {"message": "Alert resolved", "alert_id": alert_id}
+

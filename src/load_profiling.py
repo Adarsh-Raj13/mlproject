@@ -89,3 +89,4 @@ class LoadProfiler:
     def load(cls, filepath: str) -> "LoadProfiler":
         """Loads model pipeline from disk."""
         return joblib.load(filepath)
+

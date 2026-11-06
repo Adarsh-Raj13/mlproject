@@ -16,3 +16,4 @@ class SystemStatusResponse(BaseModel):
     overall_health_score: int
     total_active_power: str
     average_power_factor: float
+

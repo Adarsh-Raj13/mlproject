@@ -9,3 +9,4 @@ class LoadProfilingService:
         return res["load_profile_label"], res["consumption_category"]
 
 load_profiling_service = LoadProfilingService()
+

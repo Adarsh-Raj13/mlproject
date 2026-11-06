@@ -158,3 +158,4 @@ def compute_electrical_features(df: pd.DataFrame) -> pd.DataFrame:
     df["PF_Deviation"] = (pf - nominal_pf).abs().clip(0.0, 1.0)
 
     return df
+

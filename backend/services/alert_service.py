@@ -8,3 +8,4 @@ class AlertService:
             return db.query(Alert).order_by(Alert.timestamp.desc()).limit(limit).all()
 
 alert_service = AlertService()
+

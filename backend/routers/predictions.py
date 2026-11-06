@@ -13,3 +13,4 @@ def predict_single_reading(reading: Dict[str, Any]):
     if not model_loader.engine.is_loaded:
         raise HTTPException(status_code=503, detail="ML Models are not loaded.")
     return model_loader.engine.predict_single(reading)
+

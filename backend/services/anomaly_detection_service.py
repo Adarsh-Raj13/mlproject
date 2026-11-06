@@ -9,3 +9,4 @@ class AnomalyDetectionService:
         return res["is_anomaly"], res["anomaly_score"]
 
 anomaly_detection_service = AnomalyDetectionService()
+

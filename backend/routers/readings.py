@@ -18,3 +18,4 @@ def get_readings(
     if appliance_id:
         q = q.filter(ElectricalReading.appliance_id == appliance_id)
     return q.order_by(ElectricalReading.timestamp.desc()).limit(limit).all()
+

@@ -18,3 +18,4 @@ class ElectricalValidationService:
             "active_power": round(p, 2),
             "reactive_power": round(q, 2)
         }
+
