@@ -10,10 +10,13 @@ class HealthResponse(BaseModel):
 
 
 class SystemStatusResponse(BaseModel):
+    backend_status: str
+    database_status: str
+    ml_models_loaded: bool
+    models_status: Dict[str, Any]
     total_appliances: int
-    critical_alerts: int
-    warning_alerts: int
-    overall_health_score: int
-    total_active_power: str
-    average_power_factor: float
+    total_readings: int
+    active_alerts_count: int
+    critical_alerts_count: int
+    version: str
 

@@ -66,6 +66,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 
 # System & Health Endpoints
+@app.get("/health", response_model=HealthResponse, tags=["System"])
 @app.get(f"{settings.API_PREFIX}/health", response_model=HealthResponse, tags=["System"])
 def check_health():
     """Returns application health and operational heartbeat."""
